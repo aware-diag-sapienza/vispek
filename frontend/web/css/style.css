@@ -1,0 +1,783 @@
+body {
+  color: black;
+  font: 10px sans-serif;
+  overflow: hidden;
+}
+
+.grid-container {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  max-width:100%;
+  padding: 0.5rem 0;
+  grid-template-columns: 8fr 36fr 24fr 32fr;
+  grid-template-rows: auto auto 1fr auto 1fr 0vh 0vh;
+  grid-template-areas:
+    'navigation navigation navigation navigation'
+    'iteration infoscatterplot1 _empty linechart-1'
+    'history scatterplot-1 metrics linechart-1'
+    'history information info-similarity infolinechart'
+    'history scatterplot-2 matrix partitions'
+    'history zoom-window zoom-window zoom-window'
+    'history small-multiple small-multiple small-multiple';
+}
+
+.elbow-container {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  max-width:100%;
+  padding: 0.5rem 0;
+  grid-template-columns: 2fr 2fr 1fr;
+  grid-template-rows: auto auto 2fr auto 2fr 2fr;
+  grid-template-areas:
+    'navigation navigation navigation'
+    'linechart-elbow infoscatterplot1 _empty'
+    'linechart-elbow elbow-scatterplot-1 metrics'
+    'linechart-elbow elbow-scatterplot-1 info-similarity'
+    'linechart-elbow elbow-scatterplot-1 matrix'
+    'small-multiples small-multiples small-multiples';
+}
+
+#linechart-elbow {
+  grid-area: linechart-elbow;
+}
+#elbow-scatterplot-1 {
+  grid-area: elbow-scatterplot-1;
+}
+#matrix-elbow {
+  grid-area: matrix;
+}
+#small-multiples {
+  grid-area: small-multiples;
+  margin: 0.5rem;
+  border: solid slategray 1px;
+  overflow-x: auto;
+  display: flex;
+}
+
+.grid-container > div {
+  background-color: #fff;
+  font-size: small;
+}
+
+.item-navbar {
+  grid-area: navigation;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+}
+
+.item-navbar-submenu {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+#logo {
+  font-weight: 600;
+  padding-left: 1rem;
+}
+
+.item-information {
+  display: flex;
+  flex-direction: row;
+  grid-area: information;
+  padding-top: 2px;
+  line-height: 2;
+  visibility: hidden;
+}
+
+.item-iteration {
+  grid-area: iteration;
+}
+
+.item-history {
+  grid-area: history;
+}
+
+.item-scatterplot-1 {
+  grid-area: scatterplot-1;
+  border: 1px solid rgb(255, 0, 144);
+}
+
+.item-matrix-1 {
+  grid-area: matrix;
+  text-align: center;
+}
+.item-linechart-1 {
+  grid-area: linechart-1;
+  padding-top: 1rem;
+}
+
+.item-scatterplot-2 {
+  grid-area: scatterplot-2;
+  border: 1px solid teal;
+}
+.item-matrix-2 {
+  grid-area: matrix-2;
+}
+
+.item-information, .item-metrics, .item-information-linechart {
+  padding-top: 1rem;
+}
+
+.item-metrics {
+  grid-area: info-similarity;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.item-timeline-partitions {
+  grid-area: partitions;
+}
+
+.item-tabbar {
+  grid-area: tabbar;
+}
+
+.item-information-linechart {
+  grid-area: infolinechart;
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 1rem;
+}
+
+.item-information-linechart > div {
+  display: flex;
+  align-items: center;
+}
+
+.item-information-linechart .select-label {
+  padding-right: 0.5rem;
+}
+
+.item-information-scatterplot-1 {
+  grid-area: infoscatterplot1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  visibility: hidden;
+}
+
+.partition-label {
+  font-weight: 700;
+  padding: 0.5rem;
+  margin-right: 3rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#partition-label-best {
+  color: rgb(255, 0, 144);
+}
+
+#partition-label-comp {
+  color: teal;
+  border: teal solid thin;
+}
+
+.item-menu-scatterplot {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item-navbar img {
+  padding-top: 5px;
+}
+
+.select-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.select-menu-input {
+  display: flex;
+  flex-direction: column;
+  height: 40px !important ;
+  padding: 5px !important;
+  width: 100px !important;
+}
+
+.select-button {
+  padding: 0 4rem;
+}
+
+.select-elbow {
+  display: flex;
+  align-items: center;
+}
+
+.scatterplot-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.stability-buttons > div {
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.scatterplot-buttons .select-label {
+  padding-right: 0.5rem;
+}
+
+.select-seed {
+  padding: 5px;
+}
+
+.select-seed input {
+  height: 30px !important;
+}
+
+.select-range {
+  flex-direction: row;
+  display: flex;
+  padding: 5px;
+}
+#select-minK-Elbow,
+#select-maxK-Elbow {
+  height: 30px !important;
+  width: 50px !important;
+}
+
+.select-label {
+  /* line-height: 38px; */
+  font-variant: small-caps;
+  /* min-width: 60px; */
+}
+
+.item-configuration {
+  grid-area: configuration;
+}
+
+.metrics-cont {
+  grid-area: metrics;
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+  padding: 0 1rem;
+}
+
+.metrics-bottom {
+  display: flex;
+  padding-top: 1rem;
+}
+
+.metrics-sec {
+  flex: 1;
+}
+
+.metrics-par {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+#table-metrics {
+  /* background-color: #ededed;
+  display: none; */
+}
+
+.interactive-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-dropdown-metrics {
+  grid-area: dropdownmetrics;
+  display: flex;
+  flex-direction: row;
+  visibility: hidden;
+}
+
+.item-linechart-overlay {
+  position: absolute;
+  right: 0;
+  visibility: hidden;
+}
+
+.metrics-dropdown {
+  float: right;
+  position: relative;
+  margin-top: 10px;
+  padding: 3px;
+  z-index: 9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  margin-top: 35px;
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display: block;
+}
+
+#button-metric {
+  display: none;
+  height: 30px !important;
+}
+
+/*
+thead,
+tbody {
+  background-color: #ededed;
+}
+*/
+
+.linechart_select {
+  display: none;
+}
+
+.item-elbow-scatterplot-2 {
+  grid-area: elbow-scatterplot-2;
+  padding: 2px;
+}
+
+.item-zoom-window {
+  grid-area: zoom-window;
+  display: flex;
+  flex-direction: row;
+}
+
+#small-multiple {
+  width: 100%;
+  height: 100%;
+  padding-top: 5px;
+  padding-bottom: 3px;
+  padding-left: 2px;
+  padding-right: 3px;
+}
+
+#zoom-window {
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  padding-bottom: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.zoom-window-element {
+  width: 20%;
+}
+
+.item-small-multiple {
+  grid-area: small-multiple;
+  display: flex;
+  flex-direction: row;
+}
+
+.canvas-selected {
+  margin-top: 2px;
+}
+
+.canvas-not-selected {
+  margin-top: 20px;
+}
+
+.canvas-small-multiple,
+.canvas-zoom-window {
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 2px;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+#iteration-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+.axisLineChart path,
+.axisLineChart line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.lineLineChart {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.lineLineChart1 {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.lineLineChart2 {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.lineLineChart3 {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.legendOrdinal {
+  font-size: 10px;
+}
+
+
+
+.grid {
+  stroke: #9a8b7a;
+  stroke-width: 1px;
+  fill: #cf7d1c;
+}
+.arc {
+  stroke: #9a8b7a;
+  fill: none;
+}
+.node {
+  fill: #ebd8c1;
+  stroke: #9a8b7a;
+  stroke-width: 1px;
+}
+circle.active {
+  fill: #fe9922;
+}
+path.active {
+  stroke: #fe9922;
+}
+circle.source {
+  fill: #93c464;
+}
+circle.target {
+  fill: #41a368;
+}
+
+.nav-item {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.timeline-checkbox-active {
+  fill: #000;
+  stroke-width: 3;
+  stroke: #000;
+}
+
+.timeline-checkbox-disable {
+  fill: #fff;
+  stroke-width: 3;
+  stroke: #6c757d;
+}
+
+#similarity-range {
+  width: 60px;
+}
+
+#information-info {
+  line-height: 2;
+}
+
+/* The container */
+.container {
+  display: inline;
+  position: relative;
+  padding-left: 20px !important;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border: solid;
+  border-width: 0.5px;
+  border-color: black;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: black;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: inline;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 7px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* The container */
+.container-mid-stable {
+  display: inline;
+  position: relative;
+  padding-left: 20px !important;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container-mid-stable input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-mid-stable {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border: solid;
+  border-width: 0.5px;
+  border-color: black;
+}
+
+/* On mouse-over, add a grey background color */
+.container-mid-stable:hover input ~ .checkmark-mid-stable {
+  background-color: black;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container-mid-stable input:checked ~ .checkmark-mid-stable {
+  background-color: #808080;
+}
+
+/* Create the checkmark-mid-stable/indicator (hidden when not checked) */
+.checkmark-mid-stable:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark-mid-stable when checked */
+.container-mid-stable input:checked ~ .checkmark-mid-stable:after {
+  display: inline;
+}
+
+/* Style the checkmark/indicator */
+.container-mid-stable .checkmark-mid-stable:after {
+  left: 7px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* The container */
+.container-unstable {
+  display: inline;
+  position: relative;
+  padding-left: 20px !important;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container-unstable input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-unstable {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border: solid;
+  border-width: 0.5px;
+  border-color: black;
+}
+
+/* On mouse-over, add a grey background color */
+.container-unstable:hover input ~ .checkmark-unstable {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container-unstable input:checked ~ .checkmark-unstable {
+  background-color: #a0a0a0;
+}
+
+/* Create the checkmark-unstable/indicator (hidden when not checked) */
+.checkmark-unstable:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark-unstable when checked */
+.container-unstable input:checked ~ .checkmark-unstable:after {
+  display: inline;
+}
+
+/* Style the checkmark/indicator */
+.container-unstable .checkmark-unstable:after {
+  left: 7px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+div.tooltipHistory {
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+  font: 14px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+#select-similarity-matrix,
+#info-menu-scatterplot,
+.interactive-legend,
+#id-metrics,
+#id-scatterplot-1,
+#id-scatterplot-2 {
+  visibility: hidden;
+}
+
+#load-img {
+  visibility: hidden;
+}
+
+#selected_similarity {
+  width: 30px;
+}
+
+.pretty input:checked ~ .state.p-stable label:after,
+.pretty.p-toggle .state.p-stable label:after {
+  background-color: #000000 !important;
+}
+.pretty input:checked ~ .state.p-unstable label:after,
+.pretty.p-toggle .state.p-unstable label:after {
+  background-color: #a0a0a0 !important;
+}
+.pretty input:checked ~ .state.p-mid-stable label:after,
+.pretty.p-toggle .state.p-mid-stable label:after {
+  background-color: #808080 !important;
+}
+
+#similarity-range {
+  border: solid 1px #5bc0de;
+  border-radius: 8px;
+  height: 7px;
+  outline: none;
+  transition: background 450ms ease-in;
+  -webkit-appearance: none;
+}
+
+#similarity-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid #a555;
+  background: #5bc0de;
+  cursor: pointer;
+}
+
+.delta-col {
+  text-align: right;
+}

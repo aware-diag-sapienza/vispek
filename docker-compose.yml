@@ -1,0 +1,14 @@
+services:
+  backend:
+    build: .
+    command: python -m pek.server -p 9786
+    ports:
+      - "9786:9786"
+    tty: true
+    stdin_open: true
+
+  frontend:
+    build: .
+    command: python -m http.server 8000 --bind 0.0.0.0 --directory frontend
+    ports:
+      - "8000:8000"
